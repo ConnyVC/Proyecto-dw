@@ -9,8 +9,8 @@ const router = Router()
 //End points usuarios
 router.get('/usuarios',getUsuario)
 router.post('/login', loginUsuario)
-router.post('/login', cerrarSesionUsuario)
-router.post('/login', registrarUsuario)
+router.post('/logout', cerrarSesionUsuario)
+router.post('/usuarios', registrarUsuario)
 router.put('/usuarios', cambiarContrasena)
 //End points arriendos
 router.get('/arriendos',getArriendos)
