@@ -1,58 +1,66 @@
-import { useState } from "react";
-import { crearArriendo } from "../services/arriendoService";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";//Importa el hook useState desde la librería React
+import { crearArriendo } from "../services/arriendoService";// Importa la función crearArriendo desde el servicio arriendoService
+import { useNavigate } from "react-router-dom";// Importa el hook useNavigate desde la librería react-router-dom para manejar la navegación
 
-export default function IngresarArriendo() {
-  const [patente, setPatente] = useState("");
-  const [tipo, setTipo] = useState("Sedán");
-  const [rut, setRut] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const navigate = useNavigate();
+export default function IngresarArriendo() {// Componente funcional para ingresar un nuevo arriendo
+  const [patente, setPatente] = useState("");// Estado para almacenar la patente del vehículo
+  const [tipo, setTipo] = useState("Sedán");// Estado para almacenar el tipo de vehículo, con valor por defecto "Sedán"
+  const [rut, setRut] = useState("");// Estado para almacenar el RUT del cliente
+  const [nombre, setNombre] = useState("");// Estado para almacenar el nombre del cliente
+  const [error, setError] = useState("");// Estado para almacenar mensajes de error
+  const [success, setSuccess] = useState("");// Estado para almacenar mensajes de éxito
+  const navigate = useNavigate();// Hook para manejar la navegación entre rutas
 
-  const validarRut = (rut: string) => {
-    return /^[0-9]+-[0-9kK]$/.test(rut);
+  const validarRut = (rut: string) => {// Función para validar el formato del RUT chileno
+    return /^[0-9]+-[0-9kK]$/.test(rut);// Expresión regular que verifica si el RUT tiene el formato correcto (números seguidos de un guion y un dígito verificador)
   };
 
-  const validarPatente = (pat: string) => {
-    return /^[A-Z]{4}[0-9]{2}$/i.test(pat);
+  const validarPatente = (pat: string) => {// Función para validar el formato de la patente del vehículo
+    // La patente debe tener 4 letras seguidas de 2 números (ej: ABC D12)
+    return /^[A-Z]{4}[0-9]{2}$/i.test(pat);// Expresión regular que verifica si la patente tiene el formato correcto (4 letras seguidas de 2 números)
+    // ^ inicio de la cadena
+    //[A-Z]{4} exactamente 4 letras (mayúsculas o minúsculas por la bandera i)
+    //[0-9]{2} exactamente 2 dígitos
+    //$ fin de la cadena
+    //i hace que no distinga entre mayúsculas y minúsculas
+    //.test(pat) devuelve true si pat coincide con ese formato, y false si no.
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  const handleSubmit = async (e: React.FormEvent) => {// Función para manejar el envío del formulario
+    // e es el evento del formulario, que contiene información sobre el evento que ocurrió
+    e.preventDefault();// Evita que el formulario se envíe de forma predeterminada y recargue la página
+    setError("");// Limpia el mensaje de error
+    setSuccess("");// Limpia el mensaje de éxito
 
-    if (!patente || !tipo || !rut || !nombre) {
+    if (!patente || !tipo || !rut || !nombre) {// Verifica si todos los campos están completos
       setError("Todos los campos son obligatorios.");
       return;
     }
 
-    if (!validarPatente(patente)) {
+    if (!validarPatente(patente)) {// Verifica si la patente tiene el formato correcto
       setError("La patente debe tener 4 letras y 2 números (ej: ABCD12).");
       return;
     }
 
-    if (!validarRut(rut)) {
+    if (!validarRut(rut)) {// Verifica si el RUT tiene el formato correcto
       setError("El RUT debe tener formato correcto (ej: 12345678-9).");
       return;
     }
 
-    try {
-      await crearArriendo({
+    try {// Intenta crear el arriendo llamando al servicio
+      await crearArriendo({// Envía los datos del arriendo al servicio 
         patente_vehiculo: patente,
         tipo_vehiculo: tipo as "Sedán" | "SUV" | "Camioneta",
         rut_cliente: rut,
         nombre_cliente: nombre,
       });
       setSuccess("Arriendo registrado exitosamente.");
-      setPatente("");
+      setPatente("");// Limpia el campo de patente
       setTipo("Sedán");
       setRut("");
       setNombre("");
       navigate('/arriendos')
-    } catch (err) {
+    } catch (err) {// Captura cualquier error al crear el arriendo
       setError("Error al registrar el arriendo.");
     }
   };
@@ -60,16 +68,18 @@ export default function IngresarArriendo() {
   return (
     <div className="container mt-5" style={{ maxWidth: "500px" }}>
       <h3>Ingresar nuevo arriendo</h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}> {/* handleSubmit.Esta función se encarga de validar los datos y
+       procesar el registro del arriendo, en vez de que el formulario recargue la página*/}
         <div className="mb-3">
           <label className="form-label">Patente:</label>
           <input
             type="text"
             className="form-control"
             value={patente}
-            onChange={(e) => setPatente(e.target.value.toUpperCase())}
+            onChange={(e) => setPatente(e.target.value.toUpperCase())}//hace que, cada vez que el usuario escribe en el input de patente, 
+            // el valor ingresado se convierta automáticamente a mayúsculas y se guarde en el estado patente.
             placeholder="ABCD12"
-            required
+            required// indica que este campo es obligatorio
           />
         </div>
 
@@ -78,7 +88,7 @@ export default function IngresarArriendo() {
           <select
             className="form-select"
             value={tipo}
-            onChange={(e) => setTipo(e.target.value)}
+            onChange={(e) => setTipo(e.target.value)}// actualiza el estado tipo con el valor seleccionado
             required
           >
             <option value="Sedán">Sedán</option>

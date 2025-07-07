@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
 
-  const handleArrendar = () => {
-    navigate("/nuevo-arriendo");
+  const handleArrendar = () => {// Esta función se ejecuta cuando el usuario hace clic en el botón "Arrendar"
+    navigate("/nuevo-arriendo");// Redirige al usuario a la página de ingreso de arriendo
   };
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Arrienda tu vehículo</h2>
+      <h2 className="text-center mb-4">Elige vehiculo para arrendar</h2>
       <div className="row">
         
         <div className="col-md-4">
@@ -22,7 +22,7 @@ export default function Home() {
             />
             <div className="card-body text-center">
               <h5 className="card-title">Sedán</h5>
-              <button className="btn btn-primary" onClick={handleArrendar}>
+              <button className="btn btn-primary" onClick={handleArrendar}>{/* Al hacer clic en el botón, se llama a la función handleArrendar */}
                 Arrendar
               </button>
             </div>
@@ -41,7 +41,7 @@ export default function Home() {
             />
             <div className="card-body text-center">
               <h5 className="card-title">SUV</h5>
-              <button className="btn btn-primary" onClick={handleArrendar}>
+              <button className="btn btn-primary" onClick={handleArrendar}>{/* Al hacer clic en el botón, se llama a la función handleArrendar */}
                 Arrendar
               </button>
             </div>

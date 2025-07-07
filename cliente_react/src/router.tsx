@@ -9,12 +9,12 @@ import EstadisticasTipoVehiculo from "./views/EstadisticasTipoVehiculo";
 
 
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter([// Crea un enrutador de navegador utilizando la función createBrowserRouter de react-router-dom
     {
-        path:'/',
+        path:'/',// Define la ruta base del enrutador
         element:<Layout/>,
         HydrateFallback:Loader,
-        children: [
+        children: [// Define las rutas hijas del enrutador
             {
                 index:true,
                 element:<Home />,
