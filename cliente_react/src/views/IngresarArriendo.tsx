@@ -11,13 +11,8 @@ export default function IngresarArriendo() {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  const validarRut = (rut: string) => {
-    return /^[0-9]+-[0-9kK]$/.test(rut);
-  };
-
-  const validarPatente = (pat: string) => {
-    return /^[A-Z]{4}[0-9]{2}$/i.test(pat);
-  };
+  const validarRut = (rut: string) => /^[0-9]+-[0-9kK]$/.test(rut);
+  const validarPatente = (pat: string) => /^[A-Z]{4}[0-9]{2}$/i.test(pat);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,14 +41,14 @@ export default function IngresarArriendo() {
         rut_cliente: rut,
         nombre_cliente: nombre,
       });
-      setSuccess("Arriendo registrado exitosamente.");
+
+      setSuccess("✅ Arriendo registrado exitosamente.");
       setPatente("");
       setTipo("Sedán");
       setRut("");
       setNombre("");
-      navigate('/arriendos')
     } catch (err) {
-      setError("Error al registrar el arriendo.");
+      setError(" Error al registrar el arriendo.");
     }
   };
 
@@ -113,7 +108,9 @@ export default function IngresarArriendo() {
         {error && <div className="alert alert-danger">{error}</div>}
         {success && <div className="alert alert-success">{success}</div>}
 
-        <button type="submit" className="btn btn-success">Guardar arriendo</button>
+        <button type="submit" className="btn btn-success">
+          Guardar arriendo
+        </button>
       </form>
     </div>
   );
