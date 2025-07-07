@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 export default function Productos(){
 
 
@@ -14,7 +15,7 @@ return(
 					</nav>
 				</div>
 				<div className="col-4 text-end">
-					<button className="btn btn-primary">Crear Producto</button>
+					<Link to="/productos/crear" className="btn btn-primary">Crear Producto</Link>
 				</div>
 			</div>
 			<div className="table-responsive">

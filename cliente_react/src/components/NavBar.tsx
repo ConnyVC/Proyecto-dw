@@ -1,4 +1,6 @@
-export default function NavBar(){
+import { NavLink } from "react-router-dom";
+
+export default function NavBar() {
 return(
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div className="container-fluid">
@@ -17,13 +19,14 @@ return(
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item active">
-                                <a className="nav-link" aria-current="page" href="#">Inicio</a>
+                                <NavLink to="/" className="nav-link">Inicio</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" aria-current="page" href="#">Categorías</a>
+                                
+                            <li className="nav-item active">
+                                <NavLink to="/categorias" className="nav-link">Categorias</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" aria-current="page" href="#">Productos</a>
+                            <li className="nav-item active">
+                                <NavLink to="/productos" className="nav-link">Productos</NavLink>
                             </li>
                         </ul>
                     </div>
