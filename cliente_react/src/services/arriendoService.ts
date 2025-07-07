@@ -17,6 +17,11 @@ export async function registrarDevolucion(id: number) {
   return response.data;
 }
 
+export async function eliminarArriendo(id: number) {
+  const response = await api.delete(`/arriendos/${id}`);
+  return response.data;
+}
+
 export async function obtenerArriendosFinalizados(): Promise<ArriendoCompleto[]> {
   const response = await api.get("/arriendos/finalizados");
   return response.data;

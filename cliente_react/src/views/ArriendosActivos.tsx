@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import {
   obtenerArriendosActivos,
   registrarDevolucion,
-} from "../services/arriendoService"
+  eliminarArriendo,
+} from "../services/arriendoService";
 import type { ArriendoCompleto } from "../types";
 
 export default function ArriendosActivos() {
@@ -30,6 +31,16 @@ export default function ArriendosActivos() {
       await cargarArriendos(); // Recargar lista
     } catch (err) {
       setError("Error al registrar devolución.");
+    }
+  };
+
+  const handleEliminar = async (id: number) => {
+    if (!window.confirm("¿Seguro que deseas eliminar este arriendo?")) return;
+    try {
+      await eliminarArriendo(id);
+      await cargarArriendos();
+    } catch (err) {
+      setError("Error al eliminar arriendo.");
     }
   };
 
@@ -65,9 +76,15 @@ export default function ArriendosActivos() {
                 <td>
                   <button
                     onClick={() => handleDevolucion(a.id)}
-                    className="btn btn-sm btn-primary"
+                    className="btn btn-sm btn-primary me-2"
                   >
                     Registrar devolución
+                  </button>
+                  <button
+                    onClick={() => handleEliminar(a.id)}
+                    className="btn btn-sm btn-danger"
+                  >
+                    Eliminar
                   </button>
                 </td>
               </tr>
